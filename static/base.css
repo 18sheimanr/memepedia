@@ -1,0 +1,25 @@
+.navbar-nav{
+    float: right;
+}
+
+/* Custom page footer */
+.footer {
+    margin-top: 2rem;
+  padding-top: 1.5rem;
+  color: #777;
+  border-top: .05rem solid #e5e5e5;
+}
+
+@media (min-width: 90em) {
+  .container {
+    max-width: 90rem;
+  }
+}
+
+.container-narrow > hr {
+  margin: 2rem 0;
+}
+
+.btn-sm {
+    margin: 0.5rem;
+}
