@@ -1,0 +1,37 @@
+
+.navbar-nav{
+    float: right;
+    margin-right: 2rem;
+}
+
+.navbar {
+    border-radius: 0 !important;
+    border-bottom: .05rem solid #777;
+}
+
+.navbar-brand{
+    font-size: x-large;
+    color: #0275d8;
+}
+
+.footer {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    color: #777;
+    border-top: .05rem solid #e5e5e5;
+}
+
+@media (min-width: 70rem) {
+    .container {
+        max-width: 80rem;
+    }
+}
+
+.container-narrow > hr {
+    margin: 2rem 0;
+}
+
+.card .btn {
+    font-size: x-small;
+    padding: 0.1rem 0.8rem;
+}

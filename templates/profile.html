@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% from 'memeCardRow.html' import memeCardRow %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Memepedia Home{% endblock %}
+
+{% block styles %}
+{{super()}}
+    <link rel="stylesheet" href="{{url_for('static', filename='profile.css')}}">
+{% endblock %}
+
+{% block page_content %}
+
+<div class="container">
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-xs-6">
+                <img id="profileImage" src = "./static/memes_img/profile_icon.png">
+            </div>
+            <div class="col-xs-6">
+                <h2 id="username">{{ username }}</h2>
+                <p>Joined Memepedia on {{ joinDate }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{{ memeCardRow() }}
+
+{% endblock %}
