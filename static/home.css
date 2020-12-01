@@ -1,11 +1,11 @@
 #banner{
     margin-top: 0; margin-bottom: 3%;
     text-align: center;
-    padding-top: 10%; padding-bottom: 10%;
+    padding-top: 5%; padding-bottom: 5%;
     /* background-image: url("{{url_for('static',filename='memes_img/banner.jpg')}}"); */
     background-image: linear-gradient(to right, white, rgba(255, 255, 255, 0), white), url("/static/memes_img/banner.jpg");
     background-position: center center;
-    background-size: auto 120%;
+    background-size: cover;
     background-repeat: no-repeat;
     border-top-style: solid;
     border-color: #777;

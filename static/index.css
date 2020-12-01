@@ -1,13 +1,17 @@
 .btn-primary{
-    margin-top: 1rem;
+    margin-top: 2rem;
     width: 150px;
-    margin-right: 1rem;
+    margin-right: 2rem;
 }
 .btn-secondary{
-    margin-top: 1rem;
+    margin-top: 2rem;
     width: 150px;
-    margin-left: 1rem;
+    margin-left: 2rem;
     background-color: rgb(226, 226, 226)
+}
+
+#greeting{
+    font-size: xx-large;
 }
 
 #banner{
@@ -17,7 +21,7 @@
     /* background-image: url("{{url_for('static',filename='memes_img/banner.jpg')}}"); */
     background-image: linear-gradient(to right, white, rgba(255, 255, 255, 0), white), url("/static/memes_img/banner.jpg");
     background-position: center center;
-    background-size: auto 120%;
+    background-size: cover;
     background-repeat: no-repeat;
     border-top-style: solid;
     border-color: #777;
