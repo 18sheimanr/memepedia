@@ -1,0 +1,18 @@
+<!-- Temporary webpage that allows you to see all memes you upload on one webpage. Reads
+them from the database. For testing purposes. -->
+
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Memepedia | Memes{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='index.css')}}">
+{% endblock %}
+
+{% block page_content %}
+{% for i in memes %}
+<img src="{{ url_for('.static', filename='memes/' + i.name) }}" />
+{% endfor %}
+{% endblock %}
