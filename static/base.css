@@ -35,3 +35,7 @@
     font-size: x-small;
     padding: 0.1rem 0.8rem;
 }
+.card img{
+    width: 10rem;
+    height: 10rem;
+}

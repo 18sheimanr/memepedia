@@ -35,10 +35,21 @@ application = app
 
 # Checks if file is allowed to be uploaded.
 
-
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def delete_missing_memes():
+    memes = Meme.query.all()
+    for m in memes:
+        if not os.path.exists('static/memes/'+m.name):
+            try:
+                print('static/memes/'+m.name)
+                db.session.delete(m)
+                db.session.commit()
+                print("Deleted missing meme path.")
+            except:
+                print("Error")
 
 # Database models.
 
@@ -78,6 +89,16 @@ def internal_server_error(e):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    return render_template('index.html')
+
+# Temporary route for testing. Fetches all memes currently in database.
+@app.route('/memes', methods=['GET'])
+def memebase():
+    memes = Meme.query.all()
+    return render_template('sample.html', memes=memes)
+
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
     # Code for uploading pics to database and filesystem.
     if request.method == 'POST':
         # check if the post request has the file part
@@ -100,24 +121,10 @@ def index():
             meme = Meme(name=name)
             db.session.add(meme)
             db.session.commit()
-            return redirect(url_for('memebase'))
-
-    return render_template('index.html')
-
-# Temporary route for testing. Fetches all memes currently in database.
-@app.route('/memes', methods=['GET'])
-def memebase():
+            return redirect('/home')
+    delete_missing_memes()
     memes = Meme.query.all()
-    return render_template('sample.html', memes=memes)
-
-@app.route('/home', methods=['GET', 'POST'])
-def home():
-    user = "Stranger"
-    return render_template('home.html', user=user)
-
-@app.route('/profile')
-def profile():
-    return render_template('profile.html', username="User123", joinDate="11/11/2020")
+    return render_template('profile.html', username="User123", joinDate="11/11/2020", memes=memes)
 
 @app.route('/signIn', methods=['GET', 'POST'])
 def signIn():
@@ -145,3 +152,8 @@ def signUp():
     else:
         return render_template('signup.html', form=form)
 
+@app.route('/home', methods=['GET', 'POST'])
+def home():
+    user = "Stranger"
+    memes = Meme.query.all()
+    return render_template('home.html', user=user, memes=memes)

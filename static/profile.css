@@ -1,3 +1,11 @@
 #username {
     width: 20rem;
 }
+
+.jumbotron {
+    max-height: 30rem;
+}
+
+#profileImage {
+    max-height: 20rem;
+}

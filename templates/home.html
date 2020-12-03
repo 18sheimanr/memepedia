@@ -16,12 +16,10 @@
 
 </div>
 
-{% for i in memes %}
-<img src="{{ url_for('.static', filename='memes/' + i.name) }}" />
-{% endfor %}
-
-{{ memeCardRow() }}
-{{ memeCardRow() }}
-{{ memeCardRow() }}
+{% if memes|length > 2 %}
+    {{ memeCardRow(memes) }}
+    {{ memeCardRow(memes) }}
+    {{ memeCardRow(memes) }}
+{% endif %}
 
 {% endblock %}
