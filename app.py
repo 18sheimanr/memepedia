@@ -78,6 +78,7 @@ def index():
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
+
         file = request.files['file']
 
         # Handling if user does not select file
@@ -90,8 +91,7 @@ def index():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             # Create meme with path and add to database
-            name = filename
-            meme = Meme(name=name)
+            meme = Meme(name=filename)
             db.session.add(meme)
             db.session.commit()
             return redirect(url_for('memebase'))
