@@ -121,8 +121,7 @@ def profile():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             # Create meme with path and add to database
-            name = filename
-            meme = Meme(name=name)
+            meme = Meme(name=filename)
             db.session.add(meme)
             db.session.commit()
             return redirect('/home')
