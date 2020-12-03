@@ -40,6 +40,19 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
+def delete_missing_memes():
+    memes = Meme.query.all()
+    for m in memes:
+        if not os.path.exists('static/memes/'+m.name):
+            try:
+                print('static/memes/'+m.name)
+                db.session.delete(m)
+                db.session.commit()
+                print("Deleted missing meme path.")
+            except:
+                print("Error")
+
 # Database models.
 
 # Meme model. Has a primary key and variable for its filename.
@@ -60,6 +73,13 @@ class loginForm(FlaskForm):
     submit = SubmitField('Sign In')
 
 
+class signUpForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password')
+    confirm_password = PasswordField('Confirm Password')
+    submit = SubmitField('Sign Up')
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
@@ -72,13 +92,23 @@ def internal_server_error(e):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    return render_template('index.html')
+
+# Temporary route for testing. Fetches all memes currently in database.
+@app.route('/memes', methods=['GET'])
+def memebase():
+    memes = Meme.query.all()
+    return render_template('sample.html', memes=memes)
+
+
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
     # Code for uploading pics to database and filesystem.
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
-
         file = request.files['file']
 
         # Handling if user does not select file
@@ -91,18 +121,14 @@ def index():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             # Create meme with path and add to database
-            meme = Meme(name=filename)
+            name = filename
+            meme = Meme(name=name)
             db.session.add(meme)
             db.session.commit()
-            return redirect(url_for('memebase'))
-
-    return render_template('index.html')
-
-# Temporary route for testing. Fetches all memes currently in database.
-@app.route('/memes', methods=['GET'])
-def memebase():
+            return redirect('/home')
+    delete_missing_memes()
     memes = Meme.query.all()
-    return render_template('sample.html', memes=memes)
+    return render_template('profile.html', username="User123", joinDate="11/11/2020", memes=memes)
 
 
 @app.route('/signIn', methods=['GET', 'POST'])
@@ -112,8 +138,29 @@ def signIn():
         new_name = request.form['username']
         try:
             # database commit
-            return redirect('/')
+            return redirect('/home')
         except Exception:
             return "Could not log in or register!"
     else:
         return render_template('signIn.html', form=form)
+
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signUp():
+    form = signUpForm()
+    if form.validate_on_submit():
+        new_name = request.form['username']
+        try:
+            # database commit
+            return redirect('/')
+        except Exception:
+            return "Could not log in or register!"
+    else:
+        return render_template('signup.html', form=form)
+
+
+@app.route('/home', methods=['GET', 'POST'])
+def home():
+    user = "Stranger"
+    memes = Meme.query.all()
+    return render_template('home.html', user=user, memes=memes)

@@ -1,18 +1,28 @@
-.navbar-nav{
-    float: right;
+.navbar-nav {
+  float: right;
+  margin-right: 2rem;
 }
 
-/* Custom page footer */
+.navbar {
+  border-radius: 0 !important;
+  border-bottom: 0.05rem solid #777;
+}
+
+.navbar-brand {
+  font-size: x-large;
+  color: #0275d8;
+}
+
 .footer {
-    margin-top: 2rem;
+  margin-top: 2rem;
   padding-top: 1.5rem;
   color: #777;
-  border-top: .05rem solid #e5e5e5;
+  border-top: 0.05rem solid #e5e5e5;
 }
 
-@media (min-width: 90em) {
+@media (min-width: 70rem) {
   .container {
-    max-width: 90rem;
+    max-width: 80rem;
   }
 }
 
@@ -20,6 +30,11 @@
   margin: 2rem 0;
 }
 
-.btn-sm {
-    margin: 0.5rem;
+.card .btn {
+  font-size: x-small;
+  padding: 0.1rem 0.8rem;
+}
+.card img {
+  width: 10rem;
+  height: 10rem;
 }
