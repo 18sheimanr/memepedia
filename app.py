@@ -7,8 +7,10 @@ from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, EqualTo, ValidationError
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin, LoginManager, login_required, login_user, logout_user
+from werkzeug.security import generate_password_hash,check_password_hash
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -28,6 +30,12 @@ db = SQLAlchemy(app)
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 migrate = Migrate(app, db)
+
+login_manager = LoginManager()
+login_manager.session_protection = 'strong'
+# login_manager.login_view = 'auth.login'
+
+login_manager.init_app(app)
 
 application = app
 
@@ -54,6 +62,33 @@ def delete_missing_memes():
                 print("Error")
 
 # Database models.
+class User(UserMixin, db.Model):
+    _tablename_ = 'user'
+    id = db.Column(db.Integer, primary_key = True)
+    username = db.Column(db.String(64), nullable = False, unique = True, index=True)
+
+    password_hash = db.Column(db.String(128))
+
+    @property
+    def password(self):
+        raise AttributeError('password is not a readable attribute')
+
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def verify_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+    # one-to-many relationship
+    # image_id = db.Column(db.Interger, db.ForeignKey('images.id'))
+
+    def __repr__(self):
+        return '<User %r>' % self.username
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 # Meme model. Has a primary key and variable for its filename.
 
@@ -75,10 +110,15 @@ class loginForm(FlaskForm):
 
 class signUpForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password')
-    confirm_password = PasswordField('Confirm Password')
-    submit = SubmitField('Sign Up')
+    password = PasswordField('Password', validators=[
+        DataRequired(), EqualTo('confirm_password ', message='Passwords must match.')])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired()])
 
+    def validate_username(self, field):
+        if User.query.filter_by(username=field.data).first():
+            raise ValidationError('Username already in use.')
+
+    submit = SubmitField('Sign Up')
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -134,12 +174,13 @@ def profile():
 def signIn():
     form = loginForm()
     if form.validate_on_submit():
-        new_name = request.form['username']
-        try:
-            # database commit
-            return redirect('/home')
-        except Exception:
-            return "Could not log in or register!"
+        name = request.form['username']
+        user = User.query.filter_by(name).first()
+        if user is not None and user.verify_password(form.password.data):
+            login_user(user)
+            return redirect(url_for('.home'))
+        else:
+            flash('Invalid username or password.')
     else:
         return render_template('signIn.html', form=form)
 
@@ -148,18 +189,29 @@ def signIn():
 def signUp():
     form = signUpForm()
     if form.validate_on_submit():
-        new_name = request.form['username']
+        user = User(username=form.username.data,
+                    password=form.password.data)
         try:
-            # database commit
-            return redirect('/')
+            # db.session.add(user)
+            # db.session.commit()
+            flash('You can now login.')
+            return redirect(url_for('.signIn'))
         except Exception:
-            return "Could not log in or register!"
+            return "Could not register!"
     else:
         return render_template('signup.html', form=form)
 
+# @app.route('/logout')
+# @login_required
+# def logout():
+#     logout_user()
+#     flash('You have been logged out.')
+#     return redirect(url_for('main.index'))
+
 
 @app.route('/home', methods=['GET', 'POST'])
+# @login_required
 def home():
-    user = "Stranger"
+    # user = "Stranger"
     memes = Meme.query.all()
-    return render_template('home.html', user=user, memes=memes)
+    return render_template('home.html', memes=memes)

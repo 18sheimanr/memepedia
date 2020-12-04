@@ -11,7 +11,13 @@
 {% block page_content %}
 
 <div id = "banner">
-    <h1 id = "greeting">Welcome {{ user }}!</h1>
+    <h1 id = "greeting">
+        Welcome, 
+        {% if current_user.is_authenticated() %}
+            {{ user }}
+        {% else %}
+            Stranger
+        {% end if%}!</h1>
     <h2>Your daily dank dose awaits.</h2>
 
 </div>
