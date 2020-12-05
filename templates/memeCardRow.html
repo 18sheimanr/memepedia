@@ -5,10 +5,10 @@
 <!-- TODO: replace placeholder images with user's memes from database -->
 <div class="row">
     <div class="col-sm-4">
-        <div class="card mb-4 shadow-sm">
+        <div class="card mb-4 shadow-sm border">
             <img class="card-img-top" src="{{ url_for('.static', filename='memes/' + memes[0].name) }}" alt="Card image cap">
             <div class="card-body">
-                <p class="card-text">Meme Title</p>
+                <p class="card-text"></p>
                 <div class="buttons">
                     <a href="#" class="btn btn-primary">Like</a>
                     <a href="#" class="btn btn-primary">Details</a>
@@ -16,11 +16,12 @@
             </div>
         </div>
     </div>
+    {% if memes|length > 1 %}
     <div class="col-sm-4">
-        <div class="card mb-4 shadow-sm">
+        <div class="card mb-4 shadow-sm border">
             <img class="card-img-top" src="{{ url_for('.static', filename='memes/' + memes[1].name) }}" alt="Card image cap">
             <div class="card-body">
-                <p class="card-text">Meme Title</p>
+                <p class="card-text"></p>
                 <div class="buttons">
                     <a href="#" class="btn btn-primary">Like</a>
                     <a href="#" class="btn btn-primary">Details</a>
@@ -28,11 +29,12 @@
             </div>
         </div>
     </div>
+    {% endif %}{% if memes|length > 2 %}
     <div class="col-sm-4">
-        <div class="card mb-4 shadow-sm">
+        <div class="card mb-4 shadow-sm border">
             <img class="card-img-top" src="{{ url_for('.static', filename='memes/' + memes[2].name) }}" alt="Card image cap">
             <div class="card-body">
-                <p class="card-text">Meme Title</p>
+                <p class="card-text"></p>
                 <div class="buttons">
                     <a href="#" class="btn btn-primary">Like</a>
                     <a href="#" class="btn btn-primary">Details</a>
@@ -40,6 +42,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
 </div>
 
 {% endmacro %}

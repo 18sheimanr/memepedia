@@ -18,22 +18,33 @@
                 <img id="profileImage" src = "./static/memes_img/profile_icon.png">
             </div>
             <div class="col-xs-6">
-                <h2 id="username">{{ username }}</h2>
-                <p>Joined Memepedia on {{ joinDate }}</p>
+                <h2 id="username">{{ current_user.username }}</h2>
+                <p>Joined Memepedia on {{ current_user.joinDate }}</p>
             </div>
         </div>
     </div>
 </div>
+
+{% if memes|length > 0 %}
+    {{ memeCardRow(memes) }}
+{% else %}
+    <h1>Ah Snap! You're fresh out of memes!</h1>
+{% endif %}
 
 {% if memes|length > 2 %}
     {{ memeCardRow(memes) }}
 {% endif %}
 
 
-<h1>File Upload</h1>
-<form method="POST" action="" enctype="multipart/form-data">
-  <p><input type="file" name="file"></p>
-  <p><input type="submit" value="Submit"></p>
+<form id="upload" method="POST" action="" enctype="multipart/form-data">
+    <label for="name_input" class="btn btn-primary">
+        Upload
+    </label>
+    <input id="name_input" type="file" name="file" style="display: none;">
+    <label for="submit_input" class="btn btn-secondary">
+        Submit
+    </label>
+    <input id="submit_input" type="submit" value="Submit" style="display: none;">
 </form>
 
 {% endblock %}

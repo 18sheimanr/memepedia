@@ -1,4 +1,5 @@
 import os
+import random
 from flask.helpers import url_for
 from werkzeug.utils import secure_filename
 from flask_migrate import Migrate
@@ -9,7 +10,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired, EqualTo, ValidationError
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin, LoginManager, login_required, login_user, logout_user
+from flask_login import UserMixin, LoginManager, login_required, login_user, logout_user, current_user
 from werkzeug.security import generate_password_hash,check_password_hash
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -42,7 +43,7 @@ application = app
 # TODO: Validators
 
 # Checks if file is allowed to be uploaded.
-
+db.create_all()
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -81,7 +82,8 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     # one-to-many relationship
-    # image_id = db.Column(db.Interger, db.ForeignKey('images.id'))
+    #
+    memes = db.relationship('Meme', backref='uploader')
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -97,7 +99,7 @@ class Meme(db.Model):
     _tablename_ = 'meme'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256), nullable=False)
-
+    uploader_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     def __repr__(self):
         return '<Meme %r>' % self.id
 
@@ -111,7 +113,7 @@ class loginForm(FlaskForm):
 class signUpForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[
-        DataRequired(), EqualTo('confirm_password ', message='Passwords must match.')])
+        DataRequired(), EqualTo('confirm_password', message='Passwords must match.')])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired()])
 
     def validate_username(self, field):
@@ -161,13 +163,12 @@ def profile():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             # Create meme with path and add to database
-            meme = Meme(name=filename)
+            meme = Meme(name=filename, uploader_id=current_user.id)
             db.session.add(meme)
             db.session.commit()
             return redirect('/home')
     delete_missing_memes()
-    memes = Meme.query.all()
-    return render_template('profile.html', username="User123", joinDate="11/11/2020", memes=memes)
+    return render_template('profile.html', memes=current_user.memes)
 
 
 @app.route('/signIn', methods=['GET', 'POST'])
@@ -175,7 +176,7 @@ def signIn():
     form = loginForm()
     if form.validate_on_submit():
         name = request.form['username']
-        user = User.query.filter_by(name).first()
+        user = User.query.filter_by(username=name).first()
         if user is not None and user.verify_password(form.password.data):
             login_user(user)
             return redirect(url_for('.home'))
@@ -192,8 +193,8 @@ def signUp():
         user = User(username=form.username.data,
                     password=form.password.data)
         try:
-            # db.session.add(user)
-            # db.session.commit()
+            db.session.add(user)
+            db.session.commit()
             flash('You can now login.')
             return redirect(url_for('.signIn'))
         except Exception:
@@ -212,6 +213,6 @@ def signUp():
 @app.route('/home', methods=['GET', 'POST'])
 # @login_required
 def home():
-    # user = "Stranger"
     memes = Meme.query.all()
+    random.shuffle(memes)
     return render_template('home.html', memes=memes)

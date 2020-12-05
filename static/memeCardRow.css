@@ -5,3 +5,12 @@
 #profileImage{
     width: 12rem;
 }
+
+.card{
+    box-shadow: 4px 4px 2px #0275d8;
+}
+
+.buttons{
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+}

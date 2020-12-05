@@ -13,19 +13,21 @@
 <div id = "banner">
     <h1 id = "greeting">
         Welcome, 
-        {% if current_user.is_authenticated() %}
-            {{ user }}
+        {% if current_user.is_authenticated %}
+            {{ current_user.username }}!
         {% else %}
-            Stranger
-        {% end if%}!</h1>
+            Stranger!
+        {% endif%}</h1>
     <h2>Your daily dank dose awaits.</h2>
 
 </div>
 
-{% if memes|length > 2 %}
-    {{ memeCardRow(memes) }}
-    {{ memeCardRow(memes) }}
-    {{ memeCardRow(memes) }}
+{% if memes|length > 0 %}
+    {{ memeCardRow(memes[0:3]) }}
+{% elif memes|length > 3 %}
+    {{ memCardRow(memes[3:6]) }}
+{% elif memes|length > 6 %}
+    {{ memeCardRow(memes[6:]) }}
 {% endif %}
 
 {% endblock %}

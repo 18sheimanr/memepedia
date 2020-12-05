@@ -9,3 +9,8 @@
 #profileImage {
     max-height: 20rem;
 }
+
+#upload {
+    margin-top: 2rem;
+    text-align: center;
+}
