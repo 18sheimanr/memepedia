@@ -62,6 +62,8 @@ def delete_missing_memes():
             except:
                 print("Error")
 
+
+
 # Database models.
 class User(UserMixin, db.Model):
     _tablename_ = 'user'
@@ -131,6 +133,12 @@ def page_not_found(e):
 def internal_server_error(e):
     return render_template('500.html'), 500
 
+@app.route('/signout')
+@login_required
+def signout():
+    logout_user()
+    return redirect('/')
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -168,7 +176,10 @@ def profile():
             db.session.commit()
             return redirect('/home')
     delete_missing_memes()
-    return render_template('profile.html', memes=current_user.memes)
+    if not current_user.is_authenticated:
+        return redirect('/signup')
+    else:
+        return render_template('profile.html', memes=current_user.memes)
 
 
 @app.route('/signIn', methods=['GET', 'POST'])

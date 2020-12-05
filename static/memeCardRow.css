@@ -1,5 +1,12 @@
 .card img{
     width: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.row{
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
 }
 
 #profileImage{
@@ -7,10 +14,16 @@
 }
 
 .card{
+    border-radius: 5px;
     box-shadow: 4px 4px 2px #0275d8;
 }
 
 .buttons{
     padding-bottom: 1rem;
     padding-left: 1rem;
+}
+
+.card .btn {
+  font-size: x-small;
+  padding: 0.1rem 0.8rem;
 }

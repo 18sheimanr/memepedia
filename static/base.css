@@ -30,11 +30,7 @@
   margin: 2rem 0;
 }
 
-.card .btn {
-  font-size: x-small;
-  padding: 0.1rem 0.8rem;
-}
-.card img {
-  width: 10rem;
-  height: 10rem;
+#nav_current_user{
+  color: #777777;
+  font-size: smaller;
 }

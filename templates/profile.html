@@ -31,9 +31,6 @@
     <h1>Ah Snap! You're fresh out of memes!</h1>
 {% endif %}
 
-{% if memes|length > 2 %}
-    {{ memeCardRow(memes) }}
-{% endif %}
 
 
 <form id="upload" method="POST" action="" enctype="multipart/form-data">
@@ -47,4 +44,7 @@
     <input id="submit_input" type="submit" value="Submit" style="display: none;">
 </form>
 
+<a href="/signout" type="button" class="btn btn-danger">Sign Out</a>
+
 {% endblock %}
+
