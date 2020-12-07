@@ -4,6 +4,7 @@
 
 .jumbotron {
     max-height: 30rem;
+    margin-bottom: 0;
 }
 
 #profileImage {
@@ -19,4 +20,6 @@
     padding-bottom: 2.5rem;
     border-radius: 5px;
     border: 1px solid #777777;
+    margin-left: auto;
+    margin-right: auto;
 }

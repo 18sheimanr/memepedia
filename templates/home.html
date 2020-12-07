@@ -22,12 +22,17 @@
 
 </div>
 
-{% if memes|length > 0 %}
+{% if memes|length > 6 %}
     {{ memeCardRow(memes[0:3]) }}
-{% elif memes|length > 3 %}
-    {{ memCardRow(memes[3:6]) }}
-{% elif memes|length > 6 %}
+    {{ memeCardRow(memes[3:6]) }}
     {{ memeCardRow(memes[6:]) }}
+{% elif memes|length > 3 %}
+    {{ memeCardRow(memes[0:3]) }}
+    {{ memeCardRow(memes[3:6]) }}
+{% elif memes|length > 0 %}
+    {{ memeCardRow(memes[0:3]) }}
+{% else %}
+    <h1>Ah Snap! We're fresh out of memes!</h1>
 {% endif %}
 
 {% endblock %}

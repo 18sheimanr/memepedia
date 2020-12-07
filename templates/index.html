@@ -30,13 +30,13 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
       <div class="item active">
-        <img src="{{url_for('static',filename='memes_img/img1.jpg')}}" alt="name of img" style="height: 300px;">
+        <img src="{{url_for('static', filename='memes/' + memes[0].name)}}" alt="name of img" style="height: 300px;">
       </div>
       <div class="item">
-        <img src="{{url_for('static',filename='memes_img/img2.jpg')}}" alt="..." style="height: 300px;">
+        <img src="{{url_for('static', filename='memes/' + memes[1].name)}}" alt="..." style="height: 300px;">
       </div>
       <div class="item">
-        <img src="{{url_for('static',filename='memes_img/img3.jpg')}}" alt="..." style="height: 300px;">
+        <img src="{{url_for('static', filename='memes/' + memes[2].name)}}" alt="..." style="height: 300px;">
       </div>
     </div>
 

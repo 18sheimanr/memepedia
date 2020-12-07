@@ -142,7 +142,16 @@ def signout():
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    if current_user.is_authenticated:
+        return redirect('/home')
+    memes = Meme.query.all()
+    random.shuffle(memes)
+    if len(memes) < 3:
+        meme1 = Meme(name='memes_img/img1.jpg')
+        meme2 = Meme(name='memes_img/img1.jpg')
+        meme3 = Meme(name='memes_img/img1.jpg')
+        memes = [meme1, meme2, meme3]
+    return render_template('index.html', memes=memes[-3:])
 
 # Temporary route for testing. Fetches all memes currently in database.
 @app.route('/memes', methods=['GET'])
@@ -193,6 +202,7 @@ def signIn():
             return redirect(url_for('.home'))
         else:
             flash('Invalid username or password.')
+            return render_template('signIn.html', form=form)
     else:
         return render_template('signIn.html', form=form)
 

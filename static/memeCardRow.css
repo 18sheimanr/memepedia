@@ -4,11 +4,6 @@
     border-top-right-radius: 5px;
 }
 
-.row{
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-}
-
 #profileImage{
     width: 12rem;
 }
@@ -16,6 +11,8 @@
 .card{
     border-radius: 5px;
     box-shadow: 4px 4px 2px #0275d8;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .buttons{
