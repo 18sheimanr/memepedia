@@ -1,4 +1,6 @@
-{% macro memeCardRow(memes) %}
+{% macro memeCardRowUser(memes) %}
+<!-- {% import "bootstrap/wtf.html" as wtf %} -->
+
 
 <link rel="stylesheet" href="{{url_for('static', filename='memeCardRow.css')}}">
 
@@ -13,6 +15,10 @@
                 <div class="buttons">
                     <a href="#" class="btn btn-primary">Like</a>
 
+                    <form action="{{ url_for('delete') }}" method="post" class="delete">
+                        <input type="hidden" value="{{ memes[0].id }}" name="meme_to_delete" />
+                        <input type="submit" value="Delete" class="btn btn-primary" />
+                    </form>
 
                 </div>
             </div>
@@ -28,7 +34,10 @@
                 <div class="buttons">
                     <a href="#" class="btn btn-primary">Like</a>
 
-
+                    <form action="{{ url_for('delete') }}" method="post" class="delete">
+                        <input type="hidden" value="{{ memes[1].id }}" name="meme_to_delete" />
+                        <input type="submit" value="Delete" class="btn btn-primary" />
+                    </form>
 
                 </div>
             </div>
@@ -44,6 +53,10 @@
                 <div class="buttons">
                     <a href="#" class="btn btn-primary">Like</a>
 
+                    <form action="{{ url_for('delete') }}" method="post" class="delete">
+                        <input type="hidden" value="{{ memes[2].id }}" name="meme_to_delete" />
+                        <input type="submit" value="Delete" class="btn btn-primary" />
+                    </form>
 
                 </div>
             </div>
