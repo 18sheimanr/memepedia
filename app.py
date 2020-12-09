@@ -66,6 +66,8 @@ def delete_missing_memes():
             except:
                 print("Error")
 
+# Create
+
 
 def upload(request):
      # Code for uploading pics to database and filesystem.
@@ -131,7 +133,7 @@ def load_user(user_id):
 class Meme(db.Model):
     _tablename_ = 'meme'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(256), nullable=False)
+    name = db.Column(db.String(256), nullable=False, unique=True)
     likes = db.Column(db.Integer, default=0)
     uploader_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
@@ -194,12 +196,6 @@ def index():
         memes = [meme1, meme2, meme3]
     return render_template('index.html', memes=memes[-3:])
 
-# Temporary route for testing. Fetches all memes currently in database.
-@app.route('/memes', methods=['GET'])
-def memebase():
-    memes = Meme.query.all()
-    return render_template('sample.html', memes=memes)
-
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
@@ -212,7 +208,7 @@ def profile():
     else:
         return render_template('profile.html', memes=current_user.memes)
 
-
+# Delete
 @app.route('/delete', methods=['POST'])
 def delete():
     id = int(request.form['meme_to_delete'])
@@ -222,6 +218,26 @@ def delete():
     db.session.delete(meme)
     db.session.commit()
     return redirect(url_for('.profile'))
+
+# Update
+@app.route('/like', methods=['POST'])
+def like():
+    id = int(request.form['meme_liked'])
+    likes = int(request.form['like'])
+    meme = Meme.query.filter_by(id=id).first()
+    like_type = request.form['like_type']
+
+    likes += 1
+    meme.likes = likes
+
+    db.session.add(meme)
+    db.session.commit()
+
+    if like_type == "user":
+        return redirect(url_for('.profile'))
+
+    if like_type == "home":
+        return redirect(url_for('.home'))
 
 
 @app.route('/signIn', methods=['GET', 'POST'])
