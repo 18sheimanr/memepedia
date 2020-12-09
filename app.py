@@ -68,6 +68,7 @@ def delete_missing_memes():
 
 
 def upload(request):
+     # Code for uploading pics to database and filesystem.
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -85,10 +86,10 @@ def upload(request):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             # Create meme with path and add to database
-            meme = Meme(name=filename, uploader_id=current_user.id, likes=0)
+            meme = Meme(name=filename, uploader_id=current_user.id)
             db.session.add(meme)
             db.session.commit()
-            return redirect('/profile')
+            return redirect(url_for('.home'))
 
     # MODELS
 
@@ -177,13 +178,13 @@ def internal_server_error(e):
 @login_required
 def signout():
     logout_user()
-    return redirect('/')
+    return redirect(url_for('.index'))
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if current_user.is_authenticated:
-        return redirect('/home')
+        return redirect(url_for('.home'))
     memes = Meme.query.all()
     random.shuffle(memes)
     if len(memes) < 3:
@@ -203,10 +204,11 @@ def memebase():
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
     upload(request)
+
     delete_missing_memes()
 
     if not current_user.is_authenticated:
-        return redirect('/signup')
+        return redirect(url_for('.signUp'))
     else:
         return render_template('profile.html', memes=current_user.memes)
 
