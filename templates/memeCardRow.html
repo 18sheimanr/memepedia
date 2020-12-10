@@ -1,0 +1,96 @@
+{% macro memeCardRow(memes) %}
+
+<link rel="stylesheet" href="{{url_for('static', filename='memeCardRow.css')}}">
+
+<!-- TODO: replace placeholder images with user's memes from database -->
+<div class="row">
+    <div class="col-sm-4">
+        <div class="card mb-4 shadow-sm border">
+            <img class="card-img-top" src="{{ url_for('.static', filename='memes/' + memes[0].name) }}"
+                alt="Card image cap">
+            <div class="card-body">
+                <p class="card-text"></p>
+                <div class="buttons">
+                    <div class="button">
+                        <form action="{{ url_for('like') }}" method="post">
+                            <input type="hidden" value="{{ memes[0].likes }}" name="like" />
+                            <input type="hidden" value="{{ memes[0].id }}" name="meme_liked" />
+                            <input type="hidden" value="home" name="like_type" />
+                            <input type="submit" value="Like" class="btn btn-primary" />
+                        </form>
+                    </div>
+                    <p class="likes">{{ memes[0].likes }}</p>
+                    {% if current_user.id == memes[0].uploader_id %}
+                        <div class="button">
+                            <form action="{{ url_for('delete') }}" method="post" class="delete">
+                            <input type="hidden" value="{{ memes[0].id }}" name="meme_to_delete" />
+                            <input type="submit" value="Delete" class="btn btn-primary" />
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if memes|length > 1 %}
+    <div class="col-sm-4">
+        <div class="card mb-4 shadow-sm border">
+            <img class="card-img-top" src="{{ url_for('.static', filename='memes/' + memes[1].name) }}"
+                alt="Card image cap">
+            <div class="card-body">
+                <p class="card-text"></p>
+                <div class="buttons">
+                    <div class="button">
+                        <form action="{{ url_for('like') }}" method="post">
+                            <input type="hidden" value="{{ memes[1].likes }}" name="like" />
+                            <input type="hidden" value="{{ memes[1].id }}" name="meme_liked" />
+                            <input type="hidden" value="home" name="like_type" />
+                            <input type="submit" value="Like" class="btn btn-primary" />
+                        </form>
+                    </div>
+                    <p class="likes">{{ memes[1].likes }}</p>
+                    {% if current_user.id == memes[1].uploader_id %}
+                        <div class="button">
+                            <form action="{{ url_for('delete') }}" method="post" class="delete">
+                            <input type="hidden" value="{{ memes[1].id }}" name="meme_to_delete" />
+                            <input type="submit" value="Delete" class="btn btn-primary" />
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}{% if memes|length > 2 %}
+    <div class="col-sm-4">
+        <div class="card mb-4 shadow-sm border">
+            <img class="card-img-top" src="{{ url_for('.static', filename='memes/' + memes[2].name) }}"
+                alt="Card image cap">
+            <div class="card-body">
+                <p class="card-text"></p>
+                <div class="buttons">
+                    <div class="button">
+                        <form action="{{ url_for('like') }}" method="post">
+                            <input type="hidden" value="{{ memes[2].likes }}" name="like" />
+                            <input type="hidden" value="{{ memes[2].id }}" name="meme_liked" />
+                            <input type="hidden" value="home" name="like_type" />
+                            <input type="submit" value="Like" class="btn btn-primary" />
+                        </form>
+                    </div>
+                    <p class="likes">{{ memes[2].likes }}</p>
+                    {% if current_user.id == memes[2].uploader_id %}
+                        <div class="button">
+                            <form action="{{ url_for('delete') }}" method="post" class="delete">
+                            <input type="hidden" value="{{ memes[2].id }}" name="meme_to_delete" />
+                            <input type="submit" value="Delete" class="btn btn-primary" />
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% endmacro %}

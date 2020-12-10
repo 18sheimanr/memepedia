@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% from 'memeCardRow.html' import memeCardRow with context %}
+
+{% block title %}Memepedia | Home {% endblock %}
+
+{% block styles %}
+{{super()}}
+    <link rel="stylesheet" href="{{url_for('.static', filename='home.css')}}">
+{% endblock %}
+{% block page_content %}
+
+<div id = "banner">
+    <h1 id = "greeting">
+        Welcome, 
+        {% if current_user.is_authenticated %}
+            {{ current_user.username }}!
+        {% else %}
+            Stranger!
+        {% endif%}</h1>
+    <h2>Your daily dank dose awaits.</h2>
+
+</div>
+
+{% if memes|length > 6 %}
+    {{ memeCardRow(memes[0:3]) }}
+    {{ memeCardRow(memes[3:6]) }}
+    {{ memeCardRow(memes[6:]) }}
+{% elif memes|length > 3 %}
+    {{ memeCardRow(memes[0:3]) }}
+    {{ memeCardRow(memes[3:6]) }}
+{% elif memes|length > 0 %}
+    {{ memeCardRow(memes[0:3]) }}
+{% else %}
+    <h1>Ah Snap! We're fresh out of memes!</h1>
+{% endif %}
+
+{% endblock %}

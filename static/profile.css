@@ -1,0 +1,30 @@
+#username {
+  width: 20rem;
+}
+
+.jumbotron {
+  max-height: 30rem;
+  margin-bottom: 0;
+}
+
+#profileImage {
+  max-height: 20rem;
+}
+
+#instructions {
+  margin-top: 5rem;
+  margin-left: 25rem;
+}
+
+#upload {
+  width: 20rem;
+  padding-top: 1.5rem;
+  text-align: center;
+  margin-top: 3.5rem;
+  margin-bottom: 3.5rem;
+  padding-bottom: 2.5rem;
+  border-radius: 5px;
+  border: 1px solid #777777;
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -1,0 +1,24 @@
+#banner{
+    margin-top: 0; margin-bottom: 3%;
+    text-align: center;
+    padding-top: 2rem; padding-bottom: 2rem;
+    /* background-image: url("{{url_for('static',filename='memes_img/banner.jpg')}}"); */
+    background-image: linear-gradient(to right, white, rgba(255, 255, 255, 0), white), url("/static/memes_img/banner.jpg");
+    background-position: center center;
+    background-size: auto 120%;
+    background-repeat: no-repeat;
+    border-top-style: solid;
+    border-color: #777;
+    border-bottom-style: solid;
+    border-width: 0.05rem;
+}
+
+h2{
+    font-size: large;
+    margin-top: 5%;
+}
+
+#greeting{
+    color: white;
+    -webkit-text-stroke: 1px black;
+}

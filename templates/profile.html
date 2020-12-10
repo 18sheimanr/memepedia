@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% from 'memeCardRow.html' import memeCardRow with context %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Memepedia Home{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('static', filename='profile.css')}}">
+{% endblock %}
+
+{% block page_content %}
+
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-xs-6">
+            <img id="profileImage" src="./static/memes_img/profile_icon.png">
+        </div>
+        <div class="col-xs-6">
+            <h2 id="username">{{ current_user.username }}</h2>
+            <p>Joined Memepedia on {{ current_user.joinDate }}</p>
+        </div>
+    </div>
+</div>
+
+<div id="user_uploads">
+    <h3>Your Posts</h3>
+    {% if memes|length > 6 %}
+    {{ memeCardRow(memes[0:3]) }}
+    {{ memeCardRow(memes[3:6]) }}
+    {{ memeCardRow(memes[6:]) }}
+    {% elif memes|length > 3 %}
+    {{ memeCardRow(memes[0:3]) }}
+    {{ memeCardRow(memes[3:6]) }}
+    {% elif memes|length > 0 %}
+    {{ memeCardRow(memes[0:3]) }}
+    {% else %}
+    <h1>Ah Snap! You're fresh out of memes!</h1>
+    {% endif %}
+
+</div>
+
+<div id="file_upload">
+    <p id="instructions">*Simply click submit after selecting your file!</p>
+
+    <form id="upload" method="POST" action="" enctype="multipart/form-data">
+        <input id="name_input" type="file" name="file" style="display: none;">
+
+        <label for="name_input" class="btn btn-primary">
+            Upload
+        </label>
+        <label for="submit_input" class="btn btn-secondary">
+            Submit
+        </label>
+        <input id="submit_input" type="submit" value="Submit" style="display: none;">
+    </form>
+</div>
+
+
+<a href="/signout" type="button" class="btn btn-danger">Sign Out</a>
+
+{% endblock %}

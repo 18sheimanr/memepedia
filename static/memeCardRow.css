@@ -1,0 +1,35 @@
+.card img{
+    width: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+#profileImage{
+    width: 12rem;
+}
+
+.card{
+    border-radius: 5px;
+    box-shadow: 4px 4px 2px #0275d8;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.buttons{
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+}
+
+.button{
+    display: inline-block;
+}
+
+.buttons p {
+    float: right;
+    padding-right: 1rem;
+}
+
+.card .btn {
+  font-size: x-small;
+  padding: 0.1rem 0.8rem;
+}
