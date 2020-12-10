@@ -3,9 +3,9 @@
     text-align: center;
     padding-top: 2rem; padding-bottom: 2rem;
     /* background-image: url("{{url_for('static',filename='memes_img/banner.jpg')}}"); */
-    background-image: linear-gradient(to right, white, rgba(255, 255, 255, 0), white), url("/static/memes_img/banner.jpg");
+    background-image: linear-gradient(to right, white, rgba(255, 255, 255, 0), white), url(https://images.pexels.com/photos/1053687/pexels-photo-1053687.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260);
     background-position: center center;
-    background-size: auto 120%;
+    background-size: cover;
     background-repeat: no-repeat;
     border-top-style: solid;
     border-color: #777;
