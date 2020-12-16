@@ -1,0 +1,51 @@
+.card img{
+    width: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+#profileImage{
+    width: 12rem;
+}
+
+.card{
+    border-radius: 5px;
+    border: 1px solid #777;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.buttons{
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+    padding-top: 1rem;
+}
+
+.button{
+    display: inline-block;
+}
+
+.buttons p {
+    float: right;
+    padding-right: 1rem;
+}
+
+.card .btn {
+  font-size: x-small;
+  padding: 0.1rem 0.8rem;
+}
+
+.likes{
+    font-size: large;
+    font-weight: bold;
+}
+
+.uploader_name{
+    padding-top: 0.5rem;
+    font-size: x-small;
+    color: #777;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+}

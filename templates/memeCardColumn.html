@@ -1,0 +1,34 @@
+{% macro memeCardColumn(memes, uploader_names) %}
+
+<link rel="stylesheet" href="{{url_for('static', filename='memeCardColumn.css')}}">
+
+<div class="card-columns">
+    {% for i in range(memes|length) %}
+        <div class="card mb-4 shadow-sm border meme-card">
+            <div style="max-height: 35rem; overflow-y: scroll;">
+            <img meme-id="{{ memes[i].id }}" class="card-img-top meme-card-img" src="{{ url_for('.static', filename='memes/' + memes[i].name) }}"
+                alt="Card image cap">
+            </div>
+            <div class="card-body">
+                <div class="buttons">
+                    <div class="button">
+                        <button class="btn btn-primary like-button" meme-id="{{ memes[i].id }}" increments="#like-count-{{ memes[i].id }}">Like</button>
+                    </div>
+                    <p id="like-count-{{ memes[i].id }}" class="likes">{{ memes[i].likes }}</p>
+                    {% if current_user.id == memes[i].uploader_id %}
+                        <div class="button">
+                            <form action="{{ url_for('delete') }}" method="post" class="delete">
+                            <input type="hidden" value="{{ memes[i].id }}" name="meme_to_delete" />
+                            <input type="submit" value="Delete" class="btn btn-primary" />
+                            </form>
+                        </div>
+                    {% else %}
+                        <p class="uploader_name">by <a href="{{ url_for('.profile', id=memes[i].uploader_id) }}">{{ uploader_names[i] }}</a></p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endmacro %}

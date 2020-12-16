@@ -1,3 +1,36 @@
 #username {
-    width: 20rem;
+  width: 20rem;
+}
+
+.profile-header {
+  max-height: 20rem;
+  margin-bottom: 0;
+  background-color: black;
+  border: 1px solid #777;
+  border-radius: 8px;
+  font-size: larger;
+}
+
+.profile-header>.row{
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  padding-left: 7rem;
+}
+
+#profileImage {
+  max-height: 15rem;
+  padding-top: -2rem;
+}
+
+#upload {
+  width: 20rem;
+  text-align: center;
+  margin-top: 3.5rem;
+  padding-top: 2.5rem;
+  margin-bottom: 3.5rem;
+  padding-bottom: 2.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 5px;
+  border: 1px solid #777777;
 }

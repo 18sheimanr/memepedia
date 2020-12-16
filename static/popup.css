@@ -1,0 +1,17 @@
+#meme_main{
+    width: 90%;
+    height: auto;
+    border-radius: 4px;
+}
+
+#likes_modal{
+    float: left;
+}
+
+.modal-body{
+    text-align: center;
+}
+
+.modal-content{
+    width: 70rem;
+}

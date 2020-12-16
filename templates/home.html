@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% from 'memeCardRow.html' import memeCardRow %}
+{% from 'memeCardRow.html' import memeCardRow with context %}
 
 {% block title %}Memepedia | Home {% endblock %}
 
@@ -10,14 +10,31 @@
 {% endblock %}
 {% block page_content %}
 
-<div id = "banner">
-    <h1 id = "greeting">Welcome {{ user }}!</h1>
-    <h2>Your daily dank dose awaits.</h2>
-
+<div id="banner">
+    <div class="dropdown">
+        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Hot n Fresh Memes
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item active" href="#">Hot n Fresh Memes</a><li>
+            <li><a class="dropdown-item" href="#">Random Memes</a><li>
+            {% if current_user.is_authenticated %}
+                <li><a class="dropdown-item" href="#">Liked Memes</a><li>
+            {% endif %}
+        </ul>
+    </div>
+    <div id="dank-wrap">
+        <h4 id="dank">Your Daily Dank Dose Awaits</h4>
+    </div>
 </div>
 
-{{ memeCardRow() }}
-{{ memeCardRow() }}
-{{ memeCardRow() }}
+{% for i in memes|length %}
+    {% if i%3==0 %}
+
+    {% elif i%4==1 %}
+
+    {% elif i%4==2 %}
+
+{% endfor %}
 
 {% endblock %}

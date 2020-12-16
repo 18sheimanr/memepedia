@@ -13,5 +13,6 @@
 <h1 id = "greeting">Create your account.</h1>
 {{ wtf.quick_form(form) }}
 
+<p id="form_foot">Already have an account? <a href="{{url_for('signIn')}}">Sign In!</a></p>
 
 {% endblock %}
